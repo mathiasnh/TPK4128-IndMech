@@ -1,0 +1,2 @@
+
+void allocate(int value);

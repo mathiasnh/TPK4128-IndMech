@@ -1,0 +1,37 @@
+1. 
+* Fork creates a separate memory space from the parent process, which results in both the 
+global and local variables being initialized and incremented twice (glob = 1, loc = 1). The child process created
+by vfork shares the same address space of its parent process, leading to the global variable
+only being initialized once and incremented twice (glob = 2, loc = 1). 
+
+* Each thread has a local variable while the global variable is shared between threads. 
+
+2.
+* Threads that do not get to the resource right away are put on hold and have to wait until t
+he resource is available.
+
+* When a thread has required a resource, it releases it after 2 seconds so that the next thread can
+acquire the resource. As long as a thread releases the resource so that other threads can use it, 
+no threads will "starve", and the resources are shared "fairly".
+
+3. 
+* Before adding a mutex the threads could access the resources at the same time, which lead to
+var1 and var2 not always being the same when the thread2 printed them. This happened because
+the thread1 could increment var1, then the thread2 could print var1 and var2
+before thread1 had the chance to set var2 = var1.
+
+4.
+* The deadlock happened because each thread picked up the fork to their right, making it
+impossible for anyone to pick up two forks and start eating. Since nothing was implemented 
+to release the right fork, the threads were stuck in a deadlock and the program halted.
+
+* I solved it by implementing a waiter-mutex which is assigned to allow a philosopher to pick
+up a fork. There is only one waiter, and only one philosopher can get permission from the waiter
+at a time. It is first come first serve, and the first to get permission picks up both forks and
+eats for a fixed amount of time. When they are done, they release the forks, and the thread that
+was next in line to request gets permission to pick up forks. 
+
+* Another method could be for the philosophers to drop their one fork after a random time. This
+way, the resources are available more often, and a higher chance (but not guaranteed) of a
+philosopher being able to eat.
+
