@@ -15,19 +15,26 @@
 #include <unistd.h>
 #include <errno.h>
 #include <arpa/inet.h> 
+#include <pthread.h>
 
 void error(char *msg) {
     perror(msg);
     exit(0);
 }
 
-
-void sendData(int sockfd, char str) {
+void sendString(int sockfd, char *str) {
   int n;
-  //printf("Before: %s\n", str);
+  char buffer[32];
+  sprintf(buffer, "%s\n", str);
+  n = write(sockfd, buffer, strlen(buffer));
+  if (n < 0)
+      error("ERROR writing to socket");
+}
+
+void sendChar(int sockfd, char c) {
+  int n;
   char buffer[2];
-  sprintf(buffer, "%d\n", str);
-  //printf("After: %s\n", buffer);
+  sprintf(buffer, "%c\n", c);
   n = write( sockfd, buffer, strlen(buffer));
   if (n < 0)
       error("ERROR writing to socket");
@@ -44,6 +51,19 @@ char* getData( int sockfd ) {
   return ptr;
 }
 
+void *threadFun(void *vargp) 
+{ 
+	int local_var = 0;
+
+    global_var++;
+    local_var++;
+
+    printf("glob = %i ", global_var);
+    printf("loc = %i ", local_var);
+
+    printf("\n");
+    return NULL; 
+}
 
 int main(int argc, char *argv[])
 {
@@ -53,6 +73,7 @@ int main(int argc, char *argv[])
     struct hostent *server;
     char buffer[256];
     char* data;
+    pthread_t thread_id1, thread_id2;
 
     if (argc < 3) {
       // error( const_cast<char *>( "usage myClient2 hostname port\n" ) );
@@ -71,15 +92,22 @@ int main(int argc, char *argv[])
     serv_addr.sin_port = htons(portno);
     if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0) 
         error("ERROR connecting");
-        
-    printf("Please enter a name: ");
-    bzero(buffer,256);
-    fgets(buffer,255,stdin);
-    for (int i = 0; i < strlen(buffer); i++ ) {
-      printf("buffer[i]=%s\n", buffer[i]);
-      sendData(sockfd, buffer[i]);
-      data = getData(sockfd);
-      printf("From server: %s\n", data);
+    while(1){
+      printf("Please enter a name: ");
+      bzero(buffer,256);
+      fgets(buffer,255,stdin);
+      
+      // 2a
+      for (int i = 0; i < strlen(buffer)-1; i++ ) {
+        sendChar(sockfd, buffer[i]);
+        sleep(1);
+        data = getData(sockfd);
+        printf("From server: %s\n", data);
+      }
+      n = write(sockfd, "done", 4);
+      if (n < 0)
+        error("ERROR writing to socket");
+      
     }
 
     close( sockfd );
