@@ -21,13 +21,13 @@ void error( char *msg ) {
 }
 
 
-void sendData( int sockfd, int x ) {
+void sendData( int sockfd, char* str ) {
   int n;
 
   char buffer[32];
-  sprintf( buffer, "%d\n", x );
-  if ( (n = write( sockfd, buffer, strlen(buffer) ) ) < 0 )
-    error( const_cast<char *>( "ERROR writing to socket") );
+  sprintf(buffer, "%s\n", str);
+  if ((n = write( sockfd, buffer, strlen(buffer))) < 0)
+    error("ERROR writing to socket");
   buffer[n] = '\0';
 }
 
@@ -36,7 +36,7 @@ int getData( int sockfd ) {
   int n;
 
   if ( (n = read(sockfd,buffer,31) ) < 0 )
-    error( const_cast<char *>( "ERROR reading from socket") );
+    error("ERROR reading from socket");
   buffer[n] = '\0';
   printf("buffer = %s\n", buffer);
   return atoi( buffer );
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
     
      sockfd = socket(AF_INET, SOCK_STREAM, 0);
      if (sockfd < 0) 
-         error( const_cast<char *>("ERROR opening socket") );
+         error("ERROR opening socket");
      bzero((char *) &serv_addr, sizeof(serv_addr));
 
      serv_addr.sin_family = AF_INET;
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
      serv_addr.sin_port = htons( portno );
      if (bind(sockfd, (struct sockaddr *) &serv_addr,
               sizeof(serv_addr)) < 0) 
-       error( const_cast<char *>( "ERROR on binding" ) );
+       error("ERROR on binding");
      listen(sockfd,5);
      clilen = sizeof(cli_addr);
   
@@ -71,23 +71,29 @@ int main(int argc, char *argv[]) {
      while ( 1 ) {
         printf( "waiting for new client...\n" );
         if ( ( newsockfd = accept( sockfd, (struct sockaddr *) &cli_addr, (socklen_t*) &clilen) ) < 0 )
-            error( const_cast<char *>("ERROR on accept") );
+            error("ERROR on accept");
         printf( "opened new communication with client\n" );
         while ( 1 ) {
 	     //---- wait for a letter from client ---
 	     bzero(buffer,256);
 	     n = read(newsockfd,buffer,255);
-	     if (n < 0) 
-	       error( const_cast<char *>("ERROR reading from socket"));
-	     printf("%s\n", buffer);
-	     name[name_index] = buffer[0];
+	     if (n <= 0) 
+	       break;
+	     //buffer[strcspn(buffer, "\n")] = 0;
+	     printf("Received %s\n", buffer, n);
+	     /*
+	     name[name_index] = buffer;
 	     printf("%s\n", name);
 	     name_index++;
+	     */
+	     if ((n = write(newsockfd, "OK", 2)) < 0)
+	       error("ERROR writing to socket");
+	     sleep(2);
 	}
         close( newsockfd );
 
         //--- if -2 sent by client, we can quit ---
-        if ( data == -2 )
+        if (strcmp(buffer, "exit"))
           break;
      }
      return 0; 

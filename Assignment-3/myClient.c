@@ -21,64 +21,66 @@ void error(char *msg) {
     exit(0);
 }
 
-void sendData( int sockfd, int x ) {
-  int n;
 
-  char buffer[32];
-  sprintf( buffer, "%d\n", x );
-  if ( (n = write( sockfd, buffer, strlen(buffer) ) ) < 0 )
-      error( const_cast<char *>( "ERROR writing to socket") );
-  buffer[n] = '\0';
+void sendData(int sockfd, char str) {
+  int n;
+  //printf("Before: %s\n", str);
+  char buffer[2];
+  sprintf(buffer, "%d\n", str);
+  //printf("After: %s\n", buffer);
+  n = write( sockfd, buffer, strlen(buffer));
+  if (n < 0)
+      error("ERROR writing to socket");
 }
 
-int getData( int sockfd ) {
-  char buffer[32];
+char* getData( int sockfd ) {
   int n;
-
-  if ( (n = read(sockfd,buffer,31) ) < 0 )
-       error( const_cast<char *>( "ERROR reading from socket") );
-  buffer[n] = '\0';
-  return atoi( buffer );
+  char buffer[256];
+  bzero(buffer, 256);
+  n = read(sockfd, buffer, 255);
+  if(n < 0)
+    error("ERROR reading from socket");
+  char *ptr = buffer;
+  return ptr;
 }
+
 
 int main(int argc, char *argv[])
 {
     int sockfd, portno = 51717, n;
-    char serverIp[] = "10.53.26.20";//"169.254.0.2";
+    char serverIp[] = "10.53.25.12";//"169.254.0.2";
     struct sockaddr_in serv_addr;
     struct hostent *server;
     char buffer[256];
-    char data;
-    char name[256];
+    char* data;
 
     if (argc < 3) {
       // error( const_cast<char *>( "usage myClient2 hostname port\n" ) );
-      printf( "contacting %s on port %d\n", serverIp, portno );
+      printf("contacting %s on port %d\n", serverIp, portno);
       // exit(0);
     }
-    if ( ( sockfd = socket(AF_INET, SOCK_STREAM, 0) ) < 0 )
-        error( const_cast<char *>( "ERROR opening socket") );
+    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+        error("ERROR opening socket");
 
-    if ( ( server = gethostbyname( serverIp ) ) == NULL ) 
-        error( const_cast<char *>("ERROR, no such host\n") );
+    if ((server = gethostbyname(serverIp)) == NULL) 
+        error("ERROR, no such host\n");
     
-    bzero( (char *) &serv_addr, sizeof(serv_addr));
+    bzero((char *) &serv_addr, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
-    bcopy( (char *)server->h_addr, (char *)&serv_addr.sin_addr.s_addr, server->h_length);
+    bcopy((char *)server->h_addr, (char *)&serv_addr.sin_addr.s_addr, server->h_length);
     serv_addr.sin_port = htons(portno);
-    if ( connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0) 
-        error( const_cast<char *>( "ERROR connecting") );
+    if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0) 
+        error("ERROR connecting");
         
     printf("Please enter a name: ");
     bzero(buffer,256);
     fgets(buffer,255,stdin);
-    printf("len of buffer = %i\n",strlen(buffer));
     for (int i = 0; i < strlen(buffer); i++ ) {
-      n = write(sockfd,buffer,strlen(buffer));
-      if (n < 0) 
-         error( const_cast<char *>("ERROR writing to socket"));
+      printf("buffer[i]=%s\n", buffer[i]);
+      sendData(sockfd, buffer[i]);
+      data = getData(sockfd);
+      printf("From server: %s\n", data);
     }
-    sendData( sockfd, -2 );
 
     close( sockfd );
     return 0;
