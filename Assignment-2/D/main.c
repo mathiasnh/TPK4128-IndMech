@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
     pthread_create(&t2, NULL, thread2, NULL);
 
     pthread_join(t1, NULL);
-    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
 
     pthread_mutex_destroy(&mutex);
     return 0;

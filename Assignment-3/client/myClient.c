@@ -17,6 +17,7 @@
 #include <arpa/inet.h> 
 #include <pthread.h>
 
+
 void error(char *msg) {
     perror(msg);
     exit(0);
@@ -51,29 +52,14 @@ char* getData( int sockfd ) {
   return ptr;
 }
 
-void *threadFun(void *vargp) 
-{ 
-	int local_var = 0;
-
-    global_var++;
-    local_var++;
-
-    printf("glob = %i ", global_var);
-    printf("loc = %i ", local_var);
-
-    printf("\n");
-    return NULL; 
-}
-
 int main(int argc, char *argv[])
 {
-    int sockfd, portno = 51717, n;
-    char serverIp[] = "10.53.25.12";//"169.254.0.2";
+    int sockfd, portno = 51717, n; //51717
+    char serverIp[] = "10.53.25.12";
     struct sockaddr_in serv_addr;
     struct hostent *server;
     char buffer[256];
     char* data;
-    pthread_t thread_id1, thread_id2;
 
     if (argc < 3) {
       // error( const_cast<char *>( "usage myClient2 hostname port\n" ) );
@@ -93,23 +79,23 @@ int main(int argc, char *argv[])
     if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0) 
         error("ERROR connecting");
     while(1){
+      
       printf("Please enter a name: ");
       bzero(buffer,256);
       fgets(buffer,255,stdin);
       
-      // 2a
       for (int i = 0; i < strlen(buffer)-1; i++ ) {
         sendChar(sockfd, buffer[i]);
         sleep(1);
         data = getData(sockfd);
         printf("From server: %s\n", data);
-      }
+    }
+      
       n = write(sockfd, "done", 4);
       if (n < 0)
         error("ERROR writing to socket");
       
     }
-
     close( sockfd );
     return 0;
 }
