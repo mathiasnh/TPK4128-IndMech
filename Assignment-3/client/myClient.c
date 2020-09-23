@@ -55,7 +55,7 @@ char* getData( int sockfd ) {
 int main(int argc, char *argv[])
 {
     int sockfd, portno = 51717, n; //51717
-    char serverIp[] = "10.53.25.12";
+    char serverIp[] = "10.53.27.120";
     struct sockaddr_in serv_addr;
     struct hostent *server;
     char buffer[256];
@@ -88,7 +88,8 @@ int main(int argc, char *argv[])
         sendChar(sockfd, buffer[i]);
         sleep(1);
         data = getData(sockfd);
-        printf("From server: %s\n", data);
+        printf("\rFrom server: %s", data);
+        fflush(stdout);
     }
       
       n = write(sockfd, "done", 4);
