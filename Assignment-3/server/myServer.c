@@ -56,6 +56,7 @@ int main(int argc, char *argv[]) {
      int n;
      int data;
      char name[256];
+     char rot_name[256];
      int name_index = 0;
 
      printf( "using port #%d\n", portno );
@@ -91,19 +92,20 @@ int main(int argc, char *argv[]) {
 	     if (n <= 0) 
 	       break;
 	     
-	     printf("Received %s\n", buffer);
-	     
 	     //---- if new name ----
 	     if (strcmp(buffer, "done") == 0){
+	       sendString(newsockfd, rot_name);
 	       bzero(name, 256);
+	       bzero(rot_name, 256);
 	       name_index = 0;
 	     } else {
+	       printf("Received %s\n", buffer);
 	       name[name_index] = buffer[0];
 	       char* subname = malloc(strlen(name));
 	       strncpy(subname, name, name_index+1);
 	       printf("%s\n", subname);
-	       name_index++;
-	       sendChar(newsockfd, buffer[0]+1);
+	       rot_name[name_index++] = buffer[0]+1;
+	       //sendChar(newsockfd, buffer[0]+1);
 	     }
 	}
 	
