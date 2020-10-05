@@ -1,0 +1,17 @@
+[0.275s] Invoking command in '/home/mathias/git/dev_ws/build/tpk4128_opencv_camera': PYTHONPATH=/home/mathias/git/dev_ws/install/tpk4128_opencv_camera/lib/python3.8/site-packages: /usr/bin/python3 setup.py develop --prefix /home/mathias/git/dev_ws/install/tpk4128_opencv_camera --editable --build-directory /home/mathias/git/dev_ws/build/tpk4128_opencv_camera/build --no-deps install_data --install-dir /home/mathias/git/dev_ws/install/tpk4128_opencv_camera
+[0.492s] running develop
+[0.599s] running egg_info
+[0.600s] writing tpk4128_opencv_camera.egg-info/PKG-INFO
+[0.600s] writing dependency_links to tpk4128_opencv_camera.egg-info/dependency_links.txt
+[0.600s] writing entry points to tpk4128_opencv_camera.egg-info/entry_points.txt
+[0.601s] writing requirements to tpk4128_opencv_camera.egg-info/requires.txt
+[0.601s] writing top-level names to tpk4128_opencv_camera.egg-info/top_level.txt
+[0.663s] reading manifest file 'tpk4128_opencv_camera.egg-info/SOURCES.txt'
+[0.665s] writing manifest file 'tpk4128_opencv_camera.egg-info/SOURCES.txt'
+[0.745s] running build_ext
+[0.746s] Creating /home/mathias/git/dev_ws/install/tpk4128_opencv_camera/lib/python3.8/site-packages/tpk4128-opencv-camera.egg-link (link to .)
+[0.747s] Installing opencv_camera_node script to /home/mathias/git/dev_ws/install/tpk4128_opencv_camera/lib/tpk4128_opencv_camera
+[0.749s] 
+[0.749s] Installed /home/mathias/git/dev_ws/build/tpk4128_opencv_camera
+[0.749s] running install_data
+[0.779s] Invoked command in '/home/mathias/git/dev_ws/build/tpk4128_opencv_camera' returned '0': PYTHONPATH=/home/mathias/git/dev_ws/install/tpk4128_opencv_camera/lib/python3.8/site-packages: /usr/bin/python3 setup.py develop --prefix /home/mathias/git/dev_ws/install/tpk4128_opencv_camera --editable --build-directory /home/mathias/git/dev_ws/build/tpk4128_opencv_camera/build --no-deps install_data --install-dir /home/mathias/git/dev_ws/install/tpk4128_opencv_camera

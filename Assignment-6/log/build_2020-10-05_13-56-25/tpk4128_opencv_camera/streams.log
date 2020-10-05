@@ -1,0 +1,17 @@
+[0.262s] Invoking command in '/home/mathias/git/TPK4128-IndMech/Assignment-6/build/tpk4128_opencv_camera': PYTHONPATH=/home/mathias/git/TPK4128-IndMech/Assignment-6/install/tpk4128_opencv_camera/lib/python3.8/site-packages: /usr/bin/python3 setup.py develop --prefix /home/mathias/git/TPK4128-IndMech/Assignment-6/install/tpk4128_opencv_camera --editable --build-directory /home/mathias/git/TPK4128-IndMech/Assignment-6/build/tpk4128_opencv_camera/build --no-deps install_data --install-dir /home/mathias/git/TPK4128-IndMech/Assignment-6/install/tpk4128_opencv_camera
+[0.447s] running develop
+[0.542s] running egg_info
+[0.547s] writing tpk4128_opencv_camera.egg-info/PKG-INFO
+[0.547s] writing dependency_links to tpk4128_opencv_camera.egg-info/dependency_links.txt
+[0.547s] writing entry points to tpk4128_opencv_camera.egg-info/entry_points.txt
+[0.549s] writing requirements to tpk4128_opencv_camera.egg-info/requires.txt
+[0.549s] writing top-level names to tpk4128_opencv_camera.egg-info/top_level.txt
+[0.580s] reading manifest file 'tpk4128_opencv_camera.egg-info/SOURCES.txt'
+[0.582s] writing manifest file 'tpk4128_opencv_camera.egg-info/SOURCES.txt'
+[0.615s] running build_ext
+[0.617s] Creating /home/mathias/git/TPK4128-IndMech/Assignment-6/install/tpk4128_opencv_camera/lib/python3.8/site-packages/tpk4128-opencv-camera.egg-link (link to .)
+[0.620s] Installing opencv_camera_node script to /home/mathias/git/TPK4128-IndMech/Assignment-6/install/tpk4128_opencv_camera/lib/tpk4128_opencv_camera
+[0.621s] 
+[0.622s] Installed /home/mathias/git/TPK4128-IndMech/Assignment-6/build/tpk4128_opencv_camera
+[0.622s] running install_data
+[0.648s] Invoked command in '/home/mathias/git/TPK4128-IndMech/Assignment-6/build/tpk4128_opencv_camera' returned '0': PYTHONPATH=/home/mathias/git/TPK4128-IndMech/Assignment-6/install/tpk4128_opencv_camera/lib/python3.8/site-packages: /usr/bin/python3 setup.py develop --prefix /home/mathias/git/TPK4128-IndMech/Assignment-6/install/tpk4128_opencv_camera --editable --build-directory /home/mathias/git/TPK4128-IndMech/Assignment-6/build/tpk4128_opencv_camera/build --no-deps install_data --install-dir /home/mathias/git/TPK4128-IndMech/Assignment-6/install/tpk4128_opencv_camera

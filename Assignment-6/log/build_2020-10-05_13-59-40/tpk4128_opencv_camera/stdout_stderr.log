@@ -1,0 +1,15 @@
+running develop
+running egg_info
+writing tpk4128_opencv_camera.egg-info/PKG-INFO
+writing dependency_links to tpk4128_opencv_camera.egg-info/dependency_links.txt
+writing entry points to tpk4128_opencv_camera.egg-info/entry_points.txt
+writing requirements to tpk4128_opencv_camera.egg-info/requires.txt
+writing top-level names to tpk4128_opencv_camera.egg-info/top_level.txt
+reading manifest file 'tpk4128_opencv_camera.egg-info/SOURCES.txt'
+writing manifest file 'tpk4128_opencv_camera.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/mathias/git/TPK4128-IndMech/Assignment-6/install/tpk4128_opencv_camera/lib/python3.8/site-packages/tpk4128-opencv-camera.egg-link (link to .)
+Installing opencv_camera_node script to /home/mathias/git/TPK4128-IndMech/Assignment-6/install/tpk4128_opencv_camera/lib/tpk4128_opencv_camera
+
+Installed /home/mathias/git/TPK4128-IndMech/Assignment-6/build/tpk4128_opencv_camera
+running install_data
